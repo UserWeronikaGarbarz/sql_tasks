@@ -21,17 +21,17 @@ BEGIN
 		IF (finished  = 0) THEN
 			SELECT COUNT(*) FROM rents
 				WHERE book_id = bookId
-					INTO booksRented;
+				INTO booksRented;
 			SELECT DATEDIFF(MAX(RENT_DATE), MIN(RETURN_DATE)) + 1 FROM rents
 				WHERE book_id = bookId 
-					INTO days;
+				INTO days;
 			SET rentedPerMonth = booksRented / days * 30;
 			IF (rentedPerMonth > 2) THEN
 				UPDATE books SET bestseller = TRUE
-					WHERE book_id = bookId;
+				WHERE book_id = bookId;
 			ELSE 
 				UPDATE books SET bestseller = FALSE
-					WHERE book_id = bookId;
+				WHERE book_id = bookId;
 			END IF;
 			COMMIT;
 		END IF;
